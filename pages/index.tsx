@@ -20,18 +20,24 @@ const IndexPage: NextPage<IndexPageProps> = ({ launches }) =>
 (
   <main>
     <h1>Last 3 SpaceX launches: </h1>
-    <div>
+    <div className="presentation">
       {launches.map((launch: LaunchData) => {
         const fromnow = dayjs(launch.launch_date_local).format('DD/MM/YYYY').toString()
         return (
-          <div key={launch.id}>
-            <Link href={'mission/' + launch.id}><a>{launch.mission_name} : {fromnow}</a></Link>
-            <br />
+          <div className="mission" key={launch.id}>
+            <Link href={'mission/' + launch.id}>
+              <a>
+              <div className="titre">
+                {launch.mission_name}
+                </div>
+                <div className="date">
+                {fromnow}
+                </div>
+              </a></Link>
           </div>
         )
       })}
     </div>
-    <hr/>
   </main>
 )
 

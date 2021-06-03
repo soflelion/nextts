@@ -10,6 +10,10 @@
     }
     launch_site {
       site_name
+      site_name_long
+    }
+    rocket {
+      rocket_name
     }
   }
   }

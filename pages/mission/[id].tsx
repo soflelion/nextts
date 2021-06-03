@@ -1,12 +1,11 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import QUERY_LAUNCHES from '../../api/queryLaunches.graphql'
 import QUERY_LAUNCHESPAST from '../../api/queryLaunchesPast.graphql'
-import Link from 'next/link'
 import Image from 'next/image'
 import ReactPlayer from 'react-player'
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-
+import dayjs from 'dayjs'
 interface MissionProps {
   launch: LaunchData
 }
@@ -23,6 +22,10 @@ interface LaunchData {
   }
   launch_site: {
     site_name: string
+    site_name_long: string
+  }
+  rocket: {
+    rocket_name: string
   }
 }
 
@@ -30,15 +33,19 @@ const Mission: NextPage<MissionProps> = ({ launch }) => {
   return (
     <>
       <div>
-        Test
         {launch && (
           <div key={launch.id}>
-            <Link href={'/mission/' + launch.id}>
-              <a>{launch.mission_name}</a>
-            </Link>
+            <h1>{launch.mission_name}</h1>
             {launch.links.flickr_images[0] && (
               <Image src={launch.links.flickr_images[0]} width="200" height="auto" />
             )}
+            <br />
+            Date : <b>{dayjs(launch.launch_date_local).format('DD/MM/YYYY hh:mm').toString()}</b>
+            <br />
+            Site : <b>{launch.launch_site.site_name_long}</b>
+            <br />
+            Rocket : <b>{launch.rocket.rocket_name}</b>
+            <p>{launch.details}</p>
             <ReactPlayer url={launch.links.video_link} />
           </div>
         )}
