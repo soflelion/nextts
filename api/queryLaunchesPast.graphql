@@ -1,0 +1,7 @@
+query launchesPast($numberlast: Int) {
+  launchesPast(limit: $numberlast) {
+    id
+    mission_name
+    launch_date_local
+  }
+}
